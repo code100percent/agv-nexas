@@ -325,7 +325,7 @@
 <!--
  Centered on robot; sensor origin is 0.50 m above ground 
 -->
-<origin xyz="0 0 0.45" rpy="0 0 0"/>
+<origin xyz="0 0 0.45" rpy="0 0 0.15"/>
 </joint>
 
   <!-- Gazebo Harmonic simulated 2D LiDAR -->

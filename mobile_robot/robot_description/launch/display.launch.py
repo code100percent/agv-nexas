@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
@@ -22,6 +23,7 @@ def generate_launch_description():
 
     # Launch configuration
     use_sim_time = LaunchConfiguration('use_sim_time')
+    show_rviz = LaunchConfiguration('show_rviz')
 
     # Read URDF file
     with open(default_urdf_path, 'r') as urdf_file:
@@ -32,6 +34,11 @@ def generate_launch_description():
         'use_sim_time',
         default_value='false',
         description='Use simulation clock if true'
+    )
+    declare_show_rviz = DeclareLaunchArgument(
+        'show_rviz',
+        default_value='false',
+        description='Launch RViz if true'
     )
 
     # Robot State Publisher
@@ -65,12 +72,13 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', rviz_config],
+        condition=IfCondition(show_rviz),
     )
 
     return LaunchDescription([
         declare_use_sim_time,
+        declare_show_rviz,
         robot_state_publisher_node,
         joint_state_publisher_node,
         rviz_node,
     ])
-
