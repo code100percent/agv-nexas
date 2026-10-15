@@ -1,0 +1,49 @@
+# AGV Nexus Root .gitignore
+
+# Flutter / Dart
+agvnexus/.dart_tool/
+agvnexus/.flutter-plugins
+agvnexus/.flutter-plugins-dependencies
+agvnexus/build/
+agvnexus/.idea/
+agvnexus/*.iml
+agvnexus/.packages
+agvnexus/.pub-cache/
+agvnexus/.pub/
+
+# Python / FastAPI
+**/__pycache__/
+*.py[cod]
+*$py.class
+backend/.venv/
+backend/venv/
+backend/env/
+.pytest_cache/
+backend/.pytest_cache/
+*.log
+
+# Node / Three.js
+viewer/node_modules/
+viewer/dist/
+viewer/.env*.local
+
+# Environment credentials & secrets (NEVER commit secrets)
+.env
+.env.*
+*.env
+!*.env.example
+
+# ROS 2 / Colcon
+agv_robot/build/
+agv_robot/install/
+agv_robot/log/
+build/
+install/
+log/
+
+# OS / Editor generated
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+*~

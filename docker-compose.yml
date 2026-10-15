@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      file: backend/Dockerfile
+    container_name: agvnexus-gateway
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - ROBOT_ADAPTER_MODE=simulated
+      - REQUIRE_AUTH=false
+      - SUPABASE_URL=${SUPABASE_URL:-https://your-project.supabase.co}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.example}
+      - CORS_ALLOWED_ORIGINS=["http://localhost:3000","http://localhost:8000","http://localhost:8080","http://127.0.0.1:8000"]
+      - TELEMETRY_STALE_AFTER_SECONDS=5.0
+      - WEBSOCKET_HEARTBEAT_INTERVAL_SECONDS=10.0
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - agvnexus-network
+
+networks:
+  agvnexus-network:
+    driver: bridge
